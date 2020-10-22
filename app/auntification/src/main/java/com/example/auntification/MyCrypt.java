@@ -15,8 +15,7 @@ public class MyCrypt {
             }
 
             m.update(str.getBytes(),0,str.length());
-            String hash = new BigInteger(1, m.digest()).toString(16);
-            return hash;
+            return new BigInteger(1, m.digest()).toString(16);
         }
     }
 

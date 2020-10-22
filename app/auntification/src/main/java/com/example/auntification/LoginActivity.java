@@ -20,12 +20,11 @@ public class LoginActivity extends AppCompatActivity {
     EditText writing_password;
     Button sign_in;
     Button sign_up;
-
+    DataBase db = DataBase.getInstance(getApplicationContext());
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         writing_username = (EditText) findViewById(R.id.username);
         writing_password = (EditText) findViewById(R.id.password);
         sign_in = (Button) findViewById(R.id.login);
@@ -36,9 +35,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String write_username = writing_username.getText().toString();
                 String write_password = writing_password.getText().toString();
-                String writing_username_password = write_username + ":" + write_password;
-                String hash = MyCrypt.toMd5(writing_username_password);
-                if (KnownUsers.getHashes().contains(hash)) {
+                if (KnownUsers.get_pass(write_username, write_password)) {
                     startActivity(new Intent(LoginActivity.this, SuccessActivity.class));
                 } else {
                     startActivity(new Intent(LoginActivity.this, FailActivity.class));

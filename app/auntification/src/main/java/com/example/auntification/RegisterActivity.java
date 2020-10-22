@@ -64,8 +64,9 @@ public class RegisterActivity extends AppCompatActivity {
         registered.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String log_pass = registered_username.getText().toString() + ":" + registered_password.getText().toString();
-                KnownUsers.addHashes(MyCrypt.toMd5(log_pass));
+                String login =  registered_username.getText().toString();
+                String password = registered_password.getText().toString();
+                KnownUsers.set_pass(login, password);
                 final Dialog dialog = new Dialog(RegisterActivity.this);
                 dialog.setContentView(R.layout.layout_dialog);
                 Button ok_button = (Button) dialog.findViewById(R.id.button);
