@@ -20,7 +20,6 @@ public class LoginActivity extends AppCompatActivity {
     EditText writing_password;
     Button sign_in;
     Button sign_up;
-    DataBase db = DataBase.getInstance(getApplicationContext());
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String write_username = writing_username.getText().toString();
                 String write_password = writing_password.getText().toString();
-                if (KnownUsers.get_pass(write_username, write_password)) {
+                if (KnownUsers.get_pass(write_username, write_password, getApplicationContext())) {
                     startActivity(new Intent(LoginActivity.this, SuccessActivity.class));
                 } else {
                     startActivity(new Intent(LoginActivity.this, FailActivity.class));

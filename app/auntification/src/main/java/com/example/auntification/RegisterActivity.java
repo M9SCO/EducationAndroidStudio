@@ -66,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String login =  registered_username.getText().toString();
                 String password = registered_password.getText().toString();
-                KnownUsers.set_pass(login, password);
+                KnownUsers.set_pass(login, password, getApplicationContext());
                 final Dialog dialog = new Dialog(RegisterActivity.this);
                 dialog.setContentView(R.layout.layout_dialog);
                 Button ok_button = (Button) dialog.findViewById(R.id.button);
