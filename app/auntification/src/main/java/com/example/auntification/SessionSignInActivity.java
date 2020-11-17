@@ -11,9 +11,8 @@ import android.widget.EditText;
 
 
 import com.example.auntification.ui.login.LoginViewModel;
-import java.util.Arrays;
 
-public class LoginActivity extends AppCompatActivity {
+public class SessionSignInActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
     EditText writing_username;
@@ -23,7 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_session_sign_in);
         writing_username = (EditText) findViewById(R.id.username);
         writing_password = (EditText) findViewById(R.id.password);
         sign_in = (Button) findViewById(R.id.login);
@@ -35,9 +34,9 @@ public class LoginActivity extends AppCompatActivity {
                 String write_username = writing_username.getText().toString();
                 String write_password = writing_password.getText().toString();
                 if (KnownUsers.get_pass(write_username, write_password, getApplicationContext())) {
-                    startActivity(new Intent(LoginActivity.this, SuccessActivity.class));
+                    startActivity(new Intent(SessionSignInActivity.this, SessionActivity.class));
                 } else {
-                    startActivity(new Intent(LoginActivity.this, FailActivity.class));
+                    startActivity(new Intent(SessionSignInActivity.this, SessionSignInFail.class));
                 }
             }
         });
@@ -47,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                startActivity(new Intent(SessionSignInActivity.this, SessionSignUpActivity.class));
             }
         });
 

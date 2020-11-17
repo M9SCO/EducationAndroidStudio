@@ -9,11 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RegisterActivity"></activity>
-        <activity android:name=".FailActivity" />
-        <activity android:name=".SuccessActivity" />
+        <activity android:name=".SessionSignUpActivity"></activity>
+        <activity android:name=".SessionSignInFail" />
+        <activity android:name=".SessionActivity" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".SessionSignInActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

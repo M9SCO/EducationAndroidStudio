@@ -3,17 +3,15 @@ package com.example.auntification;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class RegisterActivity extends AppCompatActivity {
+public class SessionSignUpActivity extends AppCompatActivity {
 
     EditText registered_username;
     EditText registered_password;
@@ -41,7 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_session_sign_up);
         registered_username = (EditText) findViewById(R.id.registrationUsername);
         registered_password = (EditText) findViewById(R.id.registrationPassword);
         registered_password_again = (EditText) findViewById(R.id.registrationPasswordAgain);
@@ -67,7 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String login =  registered_username.getText().toString();
                 String password = registered_password.getText().toString();
                 KnownUsers.set_pass(login, password, getApplicationContext());
-                final Dialog dialog = new Dialog(RegisterActivity.this);
+                final Dialog dialog = new Dialog(SessionSignUpActivity.this);
                 dialog.setContentView(R.layout.layout_dialog);
                 Button ok_button = (Button) dialog.findViewById(R.id.button);
                 ok_button.setOnClickListener(new View.OnClickListener() {
