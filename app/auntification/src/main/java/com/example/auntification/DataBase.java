@@ -6,7 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DataBase extends SQLiteOpenHelper {
-    final String CREATE_TABLE = "Create table accounts(id INTEGER PRIMARY KEY AUTOINCREMENT, login TEXT, password TEXT);";
+    final String CREATE_TABLE_ACCOUNTS = "Create table accounts(id INTEGER PRIMARY KEY AUTOINCREMENT, login TEXT, password TEXT);";
+    final String CREATE_TABLE_SETTINGS = "Create table settings(id INTEGER PRIMARY KEY AUTOINCREMENT, login TEXT, password TEXT);";
     static DataBase instance;
     Context mContext;
 
@@ -37,13 +38,15 @@ public class DataBase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_TABLE);
+        db.execSQL(CREATE_TABLE_ACCOUNTS);
+        db.execSQL(CREATE_TABLE_SETTINGS);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //проверяете какая версия сейчас и делаете апдейт
-        db.execSQL("DROP TABLE IF EXISTS tableName");
+        db.execSQL("DROP TABLE IF EXISTS accounts");
+        db.execSQL("DROP TABLE IF EXISTS settings");
         onCreate(db);
     }}
 

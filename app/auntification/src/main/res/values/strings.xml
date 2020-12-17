@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">"lab 1–2"</string>
+    <string name="app_name">"lab 1–4"</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -20,4 +20,6 @@
     <string name="different_password">The passwords are different!</string>
     <string name="new_registration_success">New registration success!\nUse this username and password to pass!</string>
     <string name="ok">OK</string>
+    <string name="hello_world_swiperefresh">Крутой Hello World с SwipeRefresh</string>
+    <string name="created_by">Created by Chernov Grigorii</string>
 </resources>

@@ -4,7 +4,7 @@ package com.example.auntification.data;
  * A generic class that holds a result success w/ data or an error exception.
  */
 public class Result<T> {
-    // hide the private constructor to limit subclass types (Success, Error)
+    // hide the private constructor to limit subclass types (SuccessActivity, Error)
     private Result() {
     }
 
@@ -12,7 +12,7 @@ public class Result<T> {
     public String toString() {
         if (this instanceof Result.Success) {
             Result.Success success = (Result.Success) this;
-            return "Success[data=" + success.getData().toString() + "]";
+            return "SuccessActivity[data=" + success.getData().toString() + "]";
         } else if (this instanceof Result.Error) {
             Result.Error error = (Result.Error) this;
             return "Error[exception=" + error.getError().toString() + "]";
@@ -20,7 +20,7 @@ public class Result<T> {
         return "";
     }
 
-    // Success sub-class
+    // SuccessActivity sub-class
     public final static class Success<T> extends Result {
         private T data;
 
