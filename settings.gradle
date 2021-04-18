@@ -1,3 +1,2 @@
-include ':app:auntification'
 include ':app'
-rootProject.name = "StudoWorks"
+rootProject.name = "app"

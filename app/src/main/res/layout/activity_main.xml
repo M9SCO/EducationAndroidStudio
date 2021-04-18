@@ -1,60 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ActivityMain">
 
-    <TextView
-        android:id="@+id/MessageTextView"
-        android:layout_width="76dp"
-        android:layout_height="19dp"
-        android:text="Ваш Текст"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.047"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.169" />
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-    <EditText
-        android:id="@+id/WriteMessageTextBox"
-        android:layout_width="350dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="1dp"
-        android:autofillHints=""
-        android:clickable="false"
-        android:ems="10"
-        android:hint="Введите..."
-        android:inputType="text"
-        android:selectAllOnFocus="false"
-        android:singleLine="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <CheckBox
-        android:id="@+id/AccessCheckBox"
-        android:layout_width="150dp"
-        android:layout_height="26dp"
-        android:layout_marginTop="1dp"
-        android:checked="true"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="разрешить ввод"
-        android:textColorLink="#FFFFFF"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/SendButton"
-        android:layout_width="59dp"
-        android:layout_height="46dp"
-        android:background="#FFFFFF"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="отправить"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
