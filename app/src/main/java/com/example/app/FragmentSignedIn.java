@@ -30,15 +30,16 @@ import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class FragmentSignedIn extends Fragment implements SwipeRefreshLayout.OnRefreshListener, Runnable, Response.Listener<JSONObject>, Response.ErrorListener {
+public class FragmentSignedIn extends Fragment implements SwipeRefreshLayout.OnRefreshListener, Runnable{
 
     final String SAVED_TEXT1 = "saved_text";
     final String SAVED_TEXT2 = "saved_text";
-    TextView usd;
-    TextView eur;
-    SharedPreferences sPref1;
-    SharedPreferences sPref2;
+    private TextView usd;
+    private TextView eur;
     private RequestQueue mQueue;
+    private SharedPreferences sPref1;
+    private SharedPreferences sPref2;
+    private View view;
     private SwipeRefreshLayout swipeContainer;
 
     public FragmentSignedIn() {
@@ -58,28 +59,35 @@ public class FragmentSignedIn extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
+        view = v;
         mQueue = Volley.newRequestQueue(view.getContext());
         usd = (TextView) view.findViewById(R.id.textView9);
         eur = (TextView) view.findViewById(R.id.textView11);
+        sPref1 = getActivity().getSharedPreferences("MyPref1", MODE_PRIVATE);
+        sPref2 = getActivity().getSharedPreferences("MyPref2", MODE_PRIVATE);
+
+        updateTexts();
+    }
+
+    private void updateTexts(){
         usd.setText("  .    ");
         eur.setText("  .    ");
+
         if (isNetworkConnected()) {
-            getfromAPI();
+            new MyRequest(mQueue, sPref1, sPref2);
             swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
             swipeContainer.setOnRefreshListener(this);
         } else {
-            sPref1 = getActivity().getSharedPreferences("MyPref1", MODE_PRIVATE);
-            String savedText1 = sPref1.getString(SAVED_TEXT1, "");
-            sPref2 = getActivity().getSharedPreferences("MyPref2", MODE_PRIVATE);
-            String savedText2 = sPref2.getString(SAVED_TEXT2, "");
-            if (savedText1.length() > 0 && savedText2.length() > 0) {
-                usd.setText(savedText1);
-                eur.setText(savedText2);
-            }
             Toast toast = Toast.makeText(view.getContext(), "No internet connection!", Toast.LENGTH_SHORT);
             toast.show();
 
+        }
+        String savedText1 = sPref1.getString(SAVED_TEXT1, "");
+        String savedText2 = sPref2.getString(SAVED_TEXT2, "");
+        if (savedText1.length() > 0 && savedText2.length() > 0) {
+            usd.setText(savedText1);
+            eur.setText(savedText2);
         }
     }
 
@@ -94,55 +102,9 @@ public class FragmentSignedIn extends Fragment implements SwipeRefreshLayout.OnR
     }
 
 
-    protected ArrayList<String> getfromAPI(Void... params) {
-        ArrayList<String> array = new ArrayList<String>();
-        String url = "https://www.cbr-xml-daily.ru/daily_json.js";
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
-                url, null, this, this);
-        mQueue.add(request);
-        return array;
-    }
-
-    @Override
-    public void onResponse(JSONObject response) {
-        String USD = null;
-        String EUR = null;
-        try {
-            JSONObject jsonObject = response.getJSONObject("Valute");
-            JSONObject jsonObject1 = jsonObject.getJSONObject("USD");
-            USD = jsonObject1.getString("Value");
-            JSONObject jsonObject2 = jsonObject.getJSONObject("EUR");
-            EUR = jsonObject2.getString("Value");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        usd.setText(USD);
-        eur.setText(EUR);
-        sPref1 = getActivity().getSharedPreferences("MyPref1", MODE_PRIVATE);
-        SharedPreferences.Editor ed1 = sPref1.edit();
-        ed1.putString(SAVED_TEXT1, usd.getText().toString());
-        ed1.commit();
-        sPref2 = getActivity().getSharedPreferences("MyPref2", MODE_PRIVATE);
-        SharedPreferences.Editor ed2 = sPref2.edit();
-        ed2.putString(SAVED_TEXT2, eur.getText().toString());
-        ed2.commit();
-    }
-
-    @Override
-    public void onErrorResponse(VolleyError error) {
-        error.printStackTrace();
-    }
-
     @Override
     public void run() {
-        if (isNetworkConnected()) {
-            usd.setText("  .    ");
-            eur.setText("  .    ");
-            getfromAPI();
-        } else {
-            Toast toast = Toast.makeText(getView().getContext(), "No internet connection!", Toast.LENGTH_SHORT);
-            toast.show();
-        }
+        updateTexts();
         swipeContainer.setRefreshing(false);
     }
 
