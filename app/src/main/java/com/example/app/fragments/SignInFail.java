@@ -1,4 +1,4 @@
-package com.example.app;
+package com.example.app.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,12 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.app.R;
 
-public class FragmentSignInFail extends Fragment implements View.OnClickListener {
+
+public class SignInFail extends Fragment implements View.OnClickListener {
     private Button sign_in_fail_back;
 
 
-    public FragmentSignInFail() {
+    public SignInFail() {
         // Required empty public constructor
     }
 
