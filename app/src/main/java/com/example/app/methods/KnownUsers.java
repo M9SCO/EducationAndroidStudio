@@ -1,27 +1,26 @@
-package com.example.app;
+package com.example.app.methods;
 
 import android.content.Context;
-import android.os.AsyncTask;
 
 import com.example.app.models.Account;
 import com.example.app.models.AccountDAO;
-import com.example.app.models.DataBase;
+import com.example.app.models.MyAbstractDataBase;
 
-public class MyKnownUsers {
+public class KnownUsers {
 
     public static boolean get_pass(String login, String password, Context context) {
-        DataBase db = MyDataBase.getInstance(context).getDatabase();
+        MyAbstractDataBase db = DataBase.getInstance(context).getDatabase();
         AccountDAO accountDAO = db.accountDAO();
-        Account account = accountDAO.getByAuth(login, MyCrypt.toMd5(password));
+        Account account = accountDAO.getByAuth(login, Crypt.toMd5(password));
         return (account != null);
     }
 
     public static void set_pass(String login, String password, Context context) {
-        DataBase db = MyDataBase.getInstance(context).getDatabase();
+        MyAbstractDataBase db = DataBase.getInstance(context).getDatabase();
         AccountDAO accountDAO = db.accountDAO();
         Account account = new Account();
         account.login = login;
-        account.password = MyCrypt.toMd5(password);
+        account.password = Crypt.toMd5(password);
         accountDAO.insert(account);
     }
 
