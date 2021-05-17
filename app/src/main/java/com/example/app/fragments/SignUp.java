@@ -1,4 +1,4 @@
-package com.example.app;
+package com.example.app.fragments;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,8 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.app.methods.KnownUsers;
+import com.example.app.R;
 
-public class FragmentSignUp extends Fragment implements View.OnClickListener {
+
+public class SignUp extends Fragment implements View.OnClickListener {
 
     private EditText registered_username;
     private EditText registered_password;
@@ -24,7 +27,7 @@ public class FragmentSignUp extends Fragment implements View.OnClickListener {
     private Button registered;
 
 
-    public FragmentSignUp() {
+    public SignUp() {
         // Required empty public constructor
     }
 
@@ -80,7 +83,7 @@ public class FragmentSignUp extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         String login = registered_username.getText().toString();
         String password = registered_password.getText().toString();
-        MyKnownUsers.set_pass(login, password, getActivity().getApplicationContext());
+        KnownUsers.set_pass(login, password, getActivity().getApplicationContext());
         getFragmentManager().popBackStackImmediate();
 
 

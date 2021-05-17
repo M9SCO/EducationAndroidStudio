@@ -1,4 +1,4 @@
-package com.example.app;
+package com.example.app.fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -13,14 +13,17 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-public class FragmentSignIn extends Fragment implements View.OnClickListener {
+import com.example.app.methods.KnownUsers;
+import com.example.app.R;
+
+public class SignIn extends Fragment implements View.OnClickListener {
 
     private EditText writing_username;
     private EditText writing_password;
     private Button sign_in;
     private Button sign_up;
 
-    public FragmentSignIn() {
+    public SignIn() {
         // Required empty public constructor
 
 
@@ -54,16 +57,16 @@ public class FragmentSignIn extends Fragment implements View.OnClickListener {
 
                 String write_username = writing_username.getText().toString();
                 String write_password = writing_password.getText().toString();
-                if (MyKnownUsers.get_pass(write_username, write_password, v.getContext())) {
+                if (KnownUsers.get_pass(write_username, write_password, v.getContext())) {
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    FragmentSignedIn myFragment = new FragmentSignedIn();
+                    SignedIn myFragment = new SignedIn();
                     fragmentTransaction.replace(R.id.container, myFragment);
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
 
                 } else {
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    FragmentSignInFail myFragment = new FragmentSignInFail();
+                    SignInFail myFragment = new SignInFail();
                     fragmentTransaction.replace(R.id.container, myFragment);
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
@@ -71,7 +74,7 @@ public class FragmentSignIn extends Fragment implements View.OnClickListener {
                 break;
             case R.id.register:
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                FragmentSignUp sign_up = new FragmentSignUp();
+                SignUp sign_up = new SignUp();
                 transaction.replace(R.id.container, sign_up);
                 transaction.addToBackStack(null);
                 transaction.commit();

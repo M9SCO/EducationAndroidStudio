@@ -1,10 +1,10 @@
-package com.example.app;
+package com.example.app.methods;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class MyCrypt {
+public class Crypt {
     public static String toMd5(String str) {
         MessageDigest m = null;
 

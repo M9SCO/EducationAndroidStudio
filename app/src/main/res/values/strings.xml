@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">"lab 1–7"</string>
+    <string name="app_name">"Developing Android app"</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in</string>
@@ -18,7 +18,7 @@
     <string name="different_password">The passwords are different!</string>
     <string name="new_registration_success">New registration success!\nUse this username and password to pass!</string>
     <string name="ok">OK</string>
-    <string name="hello_world_swiperefresh">Крутой Hello World с SwipeRefresh</string>
     <string name="created_by">Created by Chernov Grigorii</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="please_wait">Please, wait</string>
 </resources>
