@@ -86,6 +86,8 @@ public class SignedIn extends Fragment implements SwipeRefreshLayout.OnRefreshLi
     }
 
     private void updateTexts(){
+        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
+        swipeContainer.setOnRefreshListener(this);
         if (!isNetworkConnected()) {
             Toast toast = Toast.makeText(view.getContext(), "No internet connection!", Toast.LENGTH_SHORT);
             toast.show();
@@ -101,29 +103,37 @@ public class SignedIn extends Fragment implements SwipeRefreshLayout.OnRefreshLi
             Settings lat = settingsDAO.getByKey("lat");
             Settings lon = settingsDAO.getByKey("lon");
             find_text.setText(settingsDAO.getByKey("city").value);
+            lv.removeAllViews();
 
 
             new MyRequest(mQueue).get_weather(sPref1, Float.parseFloat(lat.value), Float.parseFloat(lon.value));
-            swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
-            swipeContainer.setOnRefreshListener(this);
-            lv.removeAllViews();
-            String savedText1 = sPref1.getString(SAVED_TEXT1, "");
-            try {
-                JSONObject jsonObject = new JSONObject(savedText1);
-                for(int i=0; i<=7;i++){
-                    JSONObject data = (JSONObject) jsonObject.getJSONArray("daily").get(i);
-                    FragmentTransaction mFragmentTransaction = getFragmentManager().beginTransaction();
-                    mFragmentTransaction.add(R.id.fragment_signed_in_container, new WeatherTitle(data));
-                    mFragmentTransaction.addToBackStack(null);
-                    mFragmentTransaction.commit();
-                }
 
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    swipeContainer.setRefreshing(false);
+                    String savedText1 = sPref1.getString(SAVED_TEXT1, "");
+                    try {
+                        JSONObject jsonObject = new JSONObject(savedText1);
+                        for(int i=0; i<=7;i++){
+                            JSONObject data = (JSONObject) jsonObject.getJSONArray("daily").get(i);
+                            FragmentTransaction mFragmentTransaction = getFragmentManager().beginTransaction();
+                            mFragmentTransaction.add(R.id.fragment_signed_in_container, new WeatherTitle(data));
+                            mFragmentTransaction.addToBackStack(null);
+                            mFragmentTransaction.commit();
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }, 1800);
 
         }
-    }
+
+
+        }
 
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -139,7 +149,15 @@ public class SignedIn extends Fragment implements SwipeRefreshLayout.OnRefreshLi
     @Override
     public void run() {
         updateTexts();
-        swipeContainer.setRefreshing(false);
+
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                swipeContainer.setRefreshing(false);
+
+            }
+        }, 2000);
+
     }
 
 
@@ -157,7 +175,6 @@ public class SignedIn extends Fragment implements SwipeRefreshLayout.OnRefreshLi
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                //Do something after 10000ms
                 DialogSearchCity myDialogFragment = new DialogSearchCity(spref);
                 myDialogFragment.show(manager, "myDialog");
 

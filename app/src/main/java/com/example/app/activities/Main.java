@@ -21,11 +21,28 @@ public class Main extends AppCompatActivity {
     FragmentManager fragment_manager;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    void UpdateService(){
+        JobScheduler scheduler = (JobScheduler) getSystemService(getApplicationContext().JOB_SCHEDULER_SERVICE);
+        boolean hasBeenScheduled = false;
+        for ( JobInfo jobInfo : scheduler.getAllPendingJobs() ) {
+            if ( jobInfo.getId() == 11 ) {
+                hasBeenScheduled = true;
+                break ;
+            }
+        }
+        if (!hasBeenScheduled){
+            new BroadCastReceiver().onReceive(this,getIntent().setAction("restart"));
+        }
+    }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        UpdateService();
+
         setContentView(R.layout.activity_main);
 
         container = (FrameLayout) findViewById(R.id.container);
@@ -38,21 +55,12 @@ public class Main extends AppCompatActivity {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onDestroy() {
-        JobScheduler scheduler = (JobScheduler) getSystemService(getApplicationContext().JOB_SCHEDULER_SERVICE);
-        boolean hasBeenScheduled = false;
-        for ( JobInfo jobInfo : scheduler.getAllPendingJobs() ) {
-            if ( jobInfo.getId() == 11 ) {
-                hasBeenScheduled = true;
-                break ;
-            }
-        }
-        if (!hasBeenScheduled){
-            new BroadCastReceiver().onReceive(this,getIntent().setAction("restart"));
-        }
+        UpdateService();
         super.onDestroy();
 }
+
 
 }

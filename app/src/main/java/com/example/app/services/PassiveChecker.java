@@ -5,6 +5,8 @@ import android.app.job.JobService;
 import android.content.Intent;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
@@ -18,6 +20,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.app.methods.DataBase;
 import com.example.app.methods.MyRequest;
 import com.example.app.methods.NotificationUtils;
+import com.example.app.methods.ParseWeather;
 import com.example.app.models.MyAbstractDataBase;
 import com.example.app.models.Settings;
 import com.example.app.models.SettingsDAO;
@@ -59,6 +62,7 @@ public class PassiveChecker extends JobService {
         SettingsDAO settingsDAO = DataBase.getInstance(context).getDatabase().settingsDAO();
         Settings lat = settingsDAO.getByKey("lat");
         Settings lon = settingsDAO.getByKey("lon");
+        Settings city = settingsDAO.getByKey("city");
 
         if(lat != null && lon != null){
             new MyRequest(mQueue).get_weather(sPref1, Float.parseFloat(lat.value), Float.parseFloat(lon.value));
@@ -66,9 +70,11 @@ public class PassiveChecker extends JobService {
                 @Override
                 public void run() {
                     try {
-                        JSONObject json = new JSONObject(sPref1.getString("jsondata", ""));
-                        JSONObject current = json.getJSONObject("current");
-                        noticator.sendAndroidNotification(current.getString("temp"), current.getString("feels_like"));
+                        ParseWeather weather = new ParseWeather(new JSONObject(sPref1.getString("jsondata", "")));
+                        weather.toCurrent();
+                        noticator.sendAndroidNotification(city.value+": "+ weather.temp, weather.weather_desc,
+                                BitmapFactory.decodeResource(context.getResources(), weather.idIcon)
+                                );
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

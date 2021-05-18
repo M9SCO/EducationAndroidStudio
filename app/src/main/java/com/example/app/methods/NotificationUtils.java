@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 
@@ -71,7 +72,7 @@ public class NotificationUtils extends ContextWrapper {
                 .setAutoCancel(true);
     }
 
-    public Void sendAndroidNotification(String title, String text){
+    public Void sendAndroidNotification(String title, String text, Bitmap bitmap){
         Notification.Builder nb = getAndroidChannelNotification(title, text);
         final PendingIntent pendingIntent = PendingIntent.getActivity(
                 context, 1, new Intent(context, Main.class), PendingIntent.FLAG_UPDATE_CURRENT);
@@ -79,7 +80,12 @@ public class NotificationUtils extends ContextWrapper {
                               .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentIntent(pendingIntent)
                 .setContentTitle(title)
-                .setContentText(text);
+        ;
+
+
+        if (bitmap != null) {
+            nb.setLargeIcon(bitmap);
+        }
         getManager().notify(101, nb.build());
         return null;
     }
